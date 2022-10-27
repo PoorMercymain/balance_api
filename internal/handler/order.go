@@ -67,7 +67,7 @@ func (h *order) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.srv.Update(r.Context(), data.OrderId, data)
+	err := h.srv.Update(r.Context(), data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -106,12 +106,4 @@ func (h *order) AddService(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	/*buf.ServiceIds = append(buf.ServiceIds, domain.Id(id))
-
-	err = h.srv.Update(r.Context(), domain.Id(id), buf)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}*/
 }

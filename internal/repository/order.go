@@ -18,8 +18,8 @@ func (r *order) Create(ctx context.Context, order domain.Order) (domain.Id, erro
 	var id domain.Id
 
 	err := r.db.conn.QueryRow(ctx,
-		`INSERT INTO order (task_id, duration, resource) VALUES ($1, $2, $3) RETURNING id`,
-		work.TaskId, work.Duration, work.Resource).Scan(&id)
+		`INSERT INTO "order" (id, user_id) VALUES ($1, $2) RETURNING id`,
+		order.OrderId, order.UserId).Scan(&id)
 
 	if err != nil {
 		return 0, err
@@ -28,43 +28,8 @@ func (r *order) Create(ctx context.Context, order domain.Order) (domain.Id, erro
 	return id, err
 }
 
-func (r *order) Update(ctx context.Context, id domain.Id, order domain.Order) error {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (r *order) Delete(ctx context.Context, id domain.Id) error {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (r *order) Read(ctx context.Context, id domain.Id) (domain.Order, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (r *order) AddService(ctx context.Context, orderId domain.Id, serviceId domain.Id) error {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (r *work) Create(ctx context.Context, work domain.Work) (domain.Id, error) {
-
-	var id domain.Id
-
-	err := r.db.conn.QueryRow(ctx,
-		`INSERT INTO work (task_id, duration, resource) VALUES ($1, $2, $3) RETURNING id`,
-		work.TaskId, work.Duration, work.Resource).Scan(&id)
-
-	if err != nil {
-		return 0, err
-	}
-
-	return id, err
-}
-
-func (r *work) Delete(ctx context.Context, id domain.Id) error {
-	_, err := r.db.conn.Exec(ctx, `DELETE FROM work WHERE id=$1`, id)
+func (r *order) Update(ctx context.Context, order domain.Order) error {
+	_, err := r.db.conn.Exec(ctx, `UPDATE "order" SET id = $1, user_id = $2 WHERE id = $1`, order.OrderId, order.UserId)
 
 	if err != nil {
 		return err
@@ -73,43 +38,45 @@ func (r *work) Delete(ctx context.Context, id domain.Id) error {
 	return err
 }
 
-func (r *work) List(ctx context.Context, id domain.Id) (domain.WorkResponse, error) {
-	var response domain.WorkResponse
-	var tid domain.Id
-
-	err := r.db.conn.QueryRow(ctx, `SELECT task_id FROM work WHERE id = $1`, id).Scan(&tid)
+func (r *order) Delete(ctx context.Context, id domain.Id) error {
+	_, err := r.db.conn.Exec(ctx, `DELETE FROM "order" WHERE id=$1`, id)
 
 	if err != nil {
-		return response, err
+		return err
 	}
 
-	result, err := r.db.conn.Query(ctx,
-		`SELECT id, task_id, duration, resource FROM work WHERE id <= $1 and task_id = $2`,
-		id, tid)
+	return err
+}
+
+func (r *order) Read(ctx context.Context, id domain.Id) (domain.Order, error) {
+	var order domain.Order
+
+	row, err := r.db.conn.Query(ctx,
+		`SELECT id, user_id FROM "order" WHERE id = $1`, id)
 
 	if err != nil {
-		return response, err
+		return order, err
 	}
 
-	defer result.Close()
+	defer row.Close()
 
-	response.Parental = make([]domain.Work, 0)
-
-	var work domain.Work
-
-	for result.Next() {
-		err = result.Scan(&work.Id, &work.TaskId, &work.Duration, &work.Resource)
-
-		if err != nil {
-			return response, err
-		}
-
-		if id == work.Id {
-			response.Main = work
-		} else {
-			response.Parental = append(response.Parental, work)
-		}
+	if row.Next() {
+		err = row.Scan(&order.OrderId, &order.UserId)
 	}
 
-	return response, err
+	return order, err
+}
+
+func (r *order) AddService(ctx context.Context, orderId domain.Id, serviceId domain.Id) error {
+	var id domain.Id
+
+	err := r.db.conn.QueryRow(ctx,
+		`INSERT INTO order_service (order_id, service_id) VALUES ($1, $2)`,
+		orderId, serviceId).Scan(&id)
+
+	if err != nil {
+		return err
+	}
+
+	return err
 }

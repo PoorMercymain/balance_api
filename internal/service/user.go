@@ -10,16 +10,16 @@ type user struct {
 	repo domain.UserRepository
 }
 
-func NewUser(repo domain.ServiceRepository) *user {
+func NewUser(repo domain.UserRepository) *user {
 	return &user{repo: repo}
 }
 
 func (s *user) Create(ctx context.Context, user domain.User) (domain.Id, error) {
-	return s.repo.Create(ctx, service)
+	return s.repo.Create(ctx, user)
 }
 
-func (s *user) Update(ctx context.Context, id domain.Id, user domain.User) error {
-	return s.repo.Update(ctx, id, service)
+func (s *user) Update(ctx context.Context, user domain.User) error {
+	return s.repo.Update(ctx, user)
 }
 
 func (s *user) Delete(ctx context.Context, id domain.Id) error {
@@ -35,9 +35,14 @@ func (s *user) ReadBalance(ctx context.Context, id domain.Id) (uint32, error) {
 }
 
 func (s *user) ReserveMoney(ctx context.Context, userId domain.Id, serviceId domain.Id, orderId domain.Id, amount uint32) error {
+	err := s.repo.SubtractMoney(ctx, userId, amount)
+	if err != nil {
+		return err
+	}
+
 	return s.repo.ReserveMoney(ctx, userId, serviceId, orderId, amount)
 }
 
-func (s *user) AddMoney(ctx context.Context, id domain.Id, amount uint32) (uint32, error) {
+func (s *user) AddMoney(ctx context.Context, id domain.Id, amount uint32) error {
 	return s.repo.AddMoney(ctx, id, amount)
 }

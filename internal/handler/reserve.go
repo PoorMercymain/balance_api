@@ -62,7 +62,7 @@ func (h *reserve) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.srv.Update(r.Context(), data.ReserveId, data)
+	err := h.srv.Update(r.Context(), data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -88,13 +88,15 @@ func (h *reserve) Read(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *reserve) ApproveRevenue(w http.ResponseWriter, r *http.Request) {
-	id, err := router.Params(r).Uint32("id")
-	if err != nil {
+	var data reserveData
+
+	defer r.Body.Close()
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	err = h.srv.ApproveRevenue(r.Context(), domain.Id(id))
+	err := h.srv.ApproveRevenue(r.Context(), data.userId, data.serviceId, data.serviceId, data.amount)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

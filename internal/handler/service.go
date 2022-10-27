@@ -62,7 +62,7 @@ func (h *service) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.srv.Update(r.Context(), data.ServiceId, data)
+	err := h.srv.Update(r.Context(), data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

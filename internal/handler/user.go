@@ -67,7 +67,7 @@ func (h *user) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.srv.Update(r.Context(), data.UserId, data)
+	err := h.srv.Update(r.Context(), data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -111,7 +111,7 @@ func (h *user) ReadBalance(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *user) ReserveMoney(w http.ResponseWriter, r *http.Request) {
-	var data domain.Reserve
+	var data reserveData
 
 	defer r.Body.Close()
 
@@ -120,7 +120,7 @@ func (h *user) ReserveMoney(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.srv.ReserveMoney(r.Context(), data.UserId, data.ServiceId, data.OrderId, data.Money)
+	err := h.srv.ReserveMoney(r.Context(), data.userId, data.serviceId, data.orderId, data.amount)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -137,13 +137,9 @@ func (h *user) AddMoney(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, err := h.srv.AddMoney(r.Context(), data.id, data.money)
+	err := h.srv.AddMoney(r.Context(), data.id, data.money)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
-	}
-
-	if err = reply(w, res); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }

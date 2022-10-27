@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: balanceapi
       POSTGRES_DB: balanceapi
     volumes:
-      - C:\postgresql\restapi:/var/lib/postgresql/data
+      - C:\postgresql\balanceapi:/var/lib/postgresql/data
     ports:
-      - "3001:5433"
+      - "3001:5432"
     command: [ "postgres", "-c", "log_statement=all" ]

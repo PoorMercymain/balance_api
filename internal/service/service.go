@@ -18,8 +18,8 @@ func (s *service) Create(ctx context.Context, service domain.Service) (domain.Id
 	return s.repo.Create(ctx, service)
 }
 
-func (s *service) Update(ctx context.Context, id domain.Id, service domain.Service) error {
-	return s.repo.Update(ctx, id, service)
+func (s *service) Update(ctx context.Context, service domain.Service) error {
+	return s.repo.Update(ctx, service)
 }
 
 func (s *service) Delete(ctx context.Context, id domain.Id) error {

@@ -18,8 +18,8 @@ func (s *order) Create(ctx context.Context, order domain.Order) (domain.Id, erro
 	return s.repo.Create(ctx, order)
 }
 
-func (s *order) Update(ctx context.Context, id domain.Id, order domain.Order) error {
-	return s.repo.Update(ctx, id, order)
+func (s *order) Update(ctx context.Context, order domain.Order) error {
+	return s.repo.Update(ctx, order)
 }
 
 func (s *order) Delete(ctx context.Context, id domain.Id) error {
