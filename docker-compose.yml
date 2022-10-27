@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:13.6
+    container_name: balance_api_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: balanceapi
+      POSTGRES_PASSWORD: balanceapi
+      POSTGRES_DB: balanceapi
+    volumes:
+      - C:\postgresql\restapi:/var/lib/postgresql/data
+    ports:
+      - "3001:5433"
+    command: [ "postgres", "-c", "log_statement=all" ]
