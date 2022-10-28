@@ -17,11 +17,11 @@ func NewDb() *db {
 	_db := new(db)
 
 	var (
-		hostname     = os.Getenv("REST_API_HOSTNAME")
-		databaseName = os.Getenv("REST_API_DATABASE_NAME")
-		username     = os.Getenv("REST_API_USERNAME")
-		password     = os.Getenv("REST_API_PASSWORD")
-		port         = os.Getenv("REST_API_PORT")
+		hostname     = os.Getenv("BALANCE_API_HOSTNAME")
+		databaseName = os.Getenv("BALANCE_API_DATABASE_NAME")
+		username     = os.Getenv("BALANCE_API_USERNAME")
+		password     = os.Getenv("BALANCE_API_PASSWORD")
+		port         = os.Getenv("BALANCE_API_PORT")
 	)
 
 	dsn := _db.getDsnString(hostname, databaseName, username, password, port)

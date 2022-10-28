@@ -49,6 +49,7 @@ func main() {
 	r.DELETE("/reserve/:id", router.WrapHandler(rh.Delete))
 	r.GET("/reserve/:id", router.WrapHandler(rh.Read))
 	r.POST("/reserve/approverevenue", router.WrapHandler(rh.ApproveRevenue))
+	r.POST("/reserve/cancelreserve", router.WrapHandler(rh.ReturnMoneyFromReserve))
 
 	r.POST("/service", router.WrapHandler(sh.Create))
 	r.PUT("/service", router.WrapHandler(sh.Update))
@@ -59,7 +60,7 @@ func main() {
 	r.PUT("/user", router.WrapHandler(uh.Update))
 	r.DELETE("/user/:id", router.WrapHandler(uh.Delete))
 	r.GET("/user/:id", router.WrapHandler(uh.Read))
-	r.GET("/user/balance/:id", router.WrapHandler(uh.ReadBalance))
+	r.GET("/balance/:id", router.WrapHandler(uh.ReadBalance))
 	r.POST("/user/reserve", router.WrapHandler(uh.ReserveMoney))
 	r.POST("/user/addmoney", router.WrapHandler(uh.AddMoney))
 

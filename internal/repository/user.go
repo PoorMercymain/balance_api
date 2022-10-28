@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-
 	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/domain"
 )
 
@@ -101,8 +100,8 @@ func (r *user) ReadBalance(ctx context.Context, id domain.Id) (uint32, error) {
 
 func (r *user) ReserveMoney(ctx context.Context, userId domain.Id, serviceId domain.Id, orderId domain.Id, amount uint32) error {
 	err := r.db.conn.QueryRow(ctx,
-		`INSERT INTO reserve (user_id, order_id, money) VALUES ($1, $2, $3)`,
-		userId, orderId, amount).Scan()
+		`INSERT INTO reserve (user_id, order_id, service_id, money) VALUES ($1, $2, $3, $4)`,
+		userId, orderId, serviceId, amount).Scan()
 
 	if err != nil {
 		return err
@@ -133,7 +132,7 @@ func (r *user) SubtractMoney(ctx context.Context, id domain.Id, amount uint32) e
 		return err
 	}
 
-	_, err = r.db.conn.Exec(ctx, `UPDATE "user" SET id = id, username = username, balance = balance - $1 WHERE id = $2`,
+	_, err = r.db.conn.Exec(ctx, `UPDATE "user" SET balance = balance - $1 WHERE id = $2`,
 		amount, id)
 
 	if err != nil {

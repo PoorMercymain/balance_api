@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-
 	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/domain"
 )
 

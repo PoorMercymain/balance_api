@@ -96,7 +96,23 @@ func (h *reserve) ApproveRevenue(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.srv.ApproveRevenue(r.Context(), data.userId, data.serviceId, data.serviceId, data.amount)
+	err := h.srv.ApproveRevenue(r.Context(), data.UserId, data.ServiceId, data.OrderId, data.Amount)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func (h *reserve) ReturnMoneyFromReserve(w http.ResponseWriter, r *http.Request) {
+	var data reserveData
+
+	defer r.Body.Close()
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	err := h.srv.ReturnMoneyFromReserve(r.Context(), data.UserId, data.ServiceId, data.OrderId, data.Amount)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

@@ -16,8 +16,8 @@ func NewOrder(srv domain.OrderService) *order {
 }
 
 type addService struct {
-	orderId   domain.Id `json:"order_id"`
-	serviceId domain.Id `json:"service_id"`
+	OrderId   domain.Id `json:"order_id"`
+	ServiceId domain.Id `json:"service_id"`
 }
 
 func (h *order) Create(w http.ResponseWriter, r *http.Request) {
@@ -101,7 +101,7 @@ func (h *order) AddService(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.srv.AddService(r.Context(), data.orderId, data.serviceId)
+	err := h.srv.AddService(r.Context(), data.OrderId, data.ServiceId)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

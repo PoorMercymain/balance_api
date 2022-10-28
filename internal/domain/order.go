@@ -5,8 +5,8 @@ import (
 )
 
 type Order struct {
-	OrderId Id     `json:"order_id"`
-	UserId  string `json:"user_id"`
+	OrderId Id `json:"order_id"`
+	UserId  Id `json:"user_id"`
 }
 
 type OrderRepository interface {

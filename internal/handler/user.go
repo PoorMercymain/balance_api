@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/domain"
 	"github.com/PoorMercymain/REST-API-work-duration-counter/pkg/router"
 	"net/http"
@@ -16,8 +17,8 @@ func NewUser(srv domain.UserService) *user {
 }
 
 type addMoney struct {
-	id    domain.Id `json:"id"`
-	money uint32    `json:"money"`
+	Id    domain.Id `json:"id"`
+	Money uint32    `json:"money"`
 }
 
 func (h *user) Create(w http.ResponseWriter, r *http.Request) {
@@ -120,7 +121,9 @@ func (h *user) ReserveMoney(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.srv.ReserveMoney(r.Context(), data.userId, data.serviceId, data.orderId, data.amount)
+	fmt.Println(data)
+
+	err := h.srv.ReserveMoney(r.Context(), data.UserId, data.ServiceId, data.OrderId, data.Amount)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -137,7 +140,7 @@ func (h *user) AddMoney(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.srv.AddMoney(r.Context(), data.id, data.money)
+	err := h.srv.AddMoney(r.Context(), data.Id, data.Money)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

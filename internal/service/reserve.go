@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/domain"
 )
@@ -31,9 +32,38 @@ func (s *reserve) Read(ctx context.Context, id domain.Id) (domain.Reserve, error
 }
 
 func (s *reserve) ApproveRevenue(ctx context.Context, userId domain.Id, serviceId domain.Id, orderId domain.Id, amount uint32) error {
-	err := s.repo.DeleteByOrderId(ctx, orderId)
+	err := s.repo.DeleteServiceFromOrderService(ctx, serviceId, orderId)
 	if err != nil {
 		return err
 	}
+	fmt.Println("service from order-service")
+
+	err = s.repo.DeleteByOrderIdAndServiceId(ctx, orderId, serviceId)
+	if err != nil {
+		return err
+	}
+
+	exists, err := s.repo.OrderExists(ctx, orderId)
+
+	if err != nil {
+		return err
+	}
+	fmt.Println("order exists")
+	fmt.Println(exists)
+
+	if !exists {
+		fmt.Println("удаляем ордер")
+		s.repo.DeleteOrder(ctx, orderId)
+	}
+
 	return s.repo.ApproveRevenue(ctx, userId, serviceId, orderId, amount)
+}
+
+func (s *reserve) ReturnMoneyFromReserve(ctx context.Context, userId domain.Id, serviceId domain.Id, orderId domain.Id, amount uint32) error {
+	err := s.repo.DeleteByOrderIdAndServiceId(ctx, orderId, serviceId)
+	if err != nil {
+		return err
+	}
+
+	return s.repo.ReturnMoneyFromReserve(ctx, userId, amount)
 }
