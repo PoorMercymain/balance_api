@@ -5,7 +5,7 @@
 <br><br><b>BALANCE_API_HOSTNAME=localhost;BALANCE_API_PORT=3001;BALANCE_API_USERNAME=balanceapi;BALANCE_API_PASSWORD=balanceapi;BALANCE_API_DATABASE_NAME=balanceapi</b><br><br>
 Далее, <b>используя файл scheme.sql, создаем таблицы в БД</b> (можно это сделать прямо из GoLand, открыв данный файлик, настроив data source и нажав на соответствующую кнопку в интерфейсе IDE)
 После этого <b>можно запустить файл main.go</b>, сервис будет работать на localhost:8000 (конкретные роуты указаны в мэйне (как это выглядит на данный момент - см. на рисунке ниже), но я в основном тестил базовый функционал, так что что-то не из списка минимальных требований может не работать/работать некорректно (но скорее всего подавляющее большинство работает как надо))</p>
-<p align=center><img src="https://user-images.githubusercontent.com/67076111/198801546-0a04cbd2-7b5b-4c6b-84c2-76646f5d3654.png"></p>
+<p align=center><img src="https://user-images.githubusercontent.com/67076111/198839929-a61931fb-9551-40a0-8203-3bf812611a79.png"></p>
 <p align=center>Роуты в мэйне</p>
 <p></p>
 <h3>Примеры запросов и комментарии к ним</h3>
