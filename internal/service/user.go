@@ -79,7 +79,7 @@ func (s *user) MakeReport(ctx context.Context, data domain.DateForReport) (strin
 
 func (s *user) GetReport(ctx context.Context, filename string) ([]byte, error) {
 	result := make([]byte, 0)
-	if !(len(filename) > 3 || filename[len(filename)-3:] == "csv") {
+	if !(len(filename) > 3 && filename[len(filename)-3:] == "csv") {
 		return result, newError("Incorrect filename. Expected a csv file")
 	}
 
