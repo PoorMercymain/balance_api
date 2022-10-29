@@ -234,7 +234,6 @@ func (r *user) ReadAccountingReport(ctx context.Context, date domain.DateForRepo
 
 	for row.Next() {
 		err = row.Scan(&reportContent.ServiceId, &reportContent.Total)
-		reportContent.ServiceName, err = r.ReadServiceName(ctx, reportContent.ServiceId)
 		if err != nil {
 			return reportContentSlice, err
 		}
@@ -248,6 +247,10 @@ func (r *user) MakeReport(ctx context.Context, date domain.DateForReport) (strin
 	reportContent, err := r.ReadAccountingReport(ctx, date)
 	if err != nil {
 		return "", err
+	}
+
+	for i := range reportContent {
+		reportContent[i].ServiceName, err = r.ReadServiceName(ctx, reportContent[i].ServiceId)
 	}
 
 	reportContentStr := make([][]string, len(reportContent))
