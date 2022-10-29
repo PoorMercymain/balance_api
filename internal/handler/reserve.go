@@ -2,8 +2,8 @@ package handler
 
 import (
 	"encoding/json"
-	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/domain"
-	"github.com/PoorMercymain/REST-API-work-duration-counter/pkg/router"
+	"github.com/PoorMercymain/balance_api/internal/domain"
+	"github.com/PoorMercymain/balance_api/pkg/router"
 	"net/http"
 )
 
@@ -112,7 +112,7 @@ func (h *reserve) ReturnMoneyFromReserve(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	err := h.srv.ReturnMoneyFromReserve(r.Context(), data.UserId, data.ServiceId, data.OrderId, data.Amount)
+	err := h.srv.ReturnMoneyFromReserve(r.Context(), data.UserId, data.ServiceId, data.OrderId, data.Amount, data.WhoMade)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

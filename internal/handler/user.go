@@ -3,8 +3,8 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/domain"
-	"github.com/PoorMercymain/REST-API-work-duration-counter/pkg/router"
+	"github.com/PoorMercymain/balance_api/internal/domain"
+	"github.com/PoorMercymain/balance_api/pkg/router"
 	"net/http"
 )
 
@@ -17,8 +17,10 @@ func NewUser(srv domain.UserService) *user {
 }
 
 type addMoney struct {
-	Id    domain.Id `json:"id"`
-	Money uint32    `json:"money"`
+	Id      domain.Id `json:"id"`
+	Money   uint32    `json:"money"`
+	WhoMade string    `json:"who_made"`
+	Reason  string    `json:"reason"`
 }
 
 func (h *user) Create(w http.ResponseWriter, r *http.Request) {
@@ -123,7 +125,7 @@ func (h *user) ReserveMoney(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(data)
 
-	err := h.srv.ReserveMoney(r.Context(), data.UserId, data.ServiceId, data.OrderId, data.Amount)
+	err := h.srv.ReserveMoney(r.Context(), data.UserId, data.ServiceId, data.OrderId, data.Amount, data.WhoMade)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -140,9 +142,47 @@ func (h *user) AddMoney(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.srv.AddMoney(r.Context(), data.Id, data.Money)
+	err := h.srv.AddMoney(r.Context(), data.Id, data.Money, data.WhoMade, data.Reason)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
+	}
+}
+
+func (h *user) TransactionList(w http.ResponseWriter, r *http.Request) {
+	userId, err := router.Params(r).Uint32("user_id")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	page, err := h.srv.TransactionList(r.Context(), domain.Id(userId))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err = reply(w, page); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func (h *user) MakeReport(w http.ResponseWriter, r *http.Request) {
+	var data domain.DateForReport
+
+	defer r.Body.Close()
+
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	link, err := h.srv.MakeReport(r.Context(), data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err = reply(w, link); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }

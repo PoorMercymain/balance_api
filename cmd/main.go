@@ -7,11 +7,11 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/handler"
-	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/repository"
-	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/service"
-	"github.com/PoorMercymain/REST-API-work-duration-counter/pkg/router"
-	"github.com/PoorMercymain/REST-API-work-duration-counter/pkg/server"
+	"github.com/PoorMercymain/balance_api/internal/handler"
+	"github.com/PoorMercymain/balance_api/internal/repository"
+	"github.com/PoorMercymain/balance_api/internal/service"
+	"github.com/PoorMercymain/balance_api/pkg/router"
+	"github.com/PoorMercymain/balance_api/pkg/server"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -63,6 +63,8 @@ func main() {
 	r.GET("/balance/:id", router.WrapHandler(uh.ReadBalance))
 	r.POST("/user/reserve", router.WrapHandler(uh.ReserveMoney))
 	r.POST("/user/addmoney", router.WrapHandler(uh.AddMoney))
+	r.GET("/transaction/:user_id", router.WrapHandler(uh.TransactionList))
+	r.POST("/csv", router.WrapHandler(uh.MakeReport))
 
 	theServer := server.New("8000", r)
 

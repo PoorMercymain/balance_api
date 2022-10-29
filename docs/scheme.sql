@@ -38,8 +38,8 @@ create table if not exists accounting_report(
 
 create table if not exists user_report(
     user_id integer constraint report_pk REFERENCES "user",
-    service_id integer constraint report_fk REFERENCES service,
     money integer not null,
     made_by text not null,
-    reason text not null
+    reason text not null,
+    transaction_date timestamp
 );

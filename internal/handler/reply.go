@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	"github.com/PoorMercymain/REST-API-work-duration-counter/pkg/router"
+	"github.com/PoorMercymain/balance_api/pkg/router"
 )
 
 func reply(w http.ResponseWriter, data interface{}) error {

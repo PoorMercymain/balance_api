@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/domain"
+	"github.com/PoorMercymain/balance_api/internal/domain"
 )
 
 type reserve struct {
@@ -59,11 +59,16 @@ func (s *reserve) ApproveRevenue(ctx context.Context, userId domain.Id, serviceI
 	return s.repo.ApproveRevenue(ctx, userId, serviceId, orderId, amount)
 }
 
-func (s *reserve) ReturnMoneyFromReserve(ctx context.Context, userId domain.Id, serviceId domain.Id, orderId domain.Id, amount uint32) error {
-	err := s.repo.DeleteByOrderIdAndServiceId(ctx, orderId, serviceId)
+func (s *reserve) ReturnMoneyFromReserve(ctx context.Context, userId domain.Id, serviceId domain.Id, orderId domain.Id, amount uint32, whoMade string) error {
+	serviceName, err := s.repo.ReadServiceName(ctx, serviceId)
 	if err != nil {
 		return err
 	}
 
-	return s.repo.ReturnMoneyFromReserve(ctx, userId, amount)
+	err = s.repo.DeleteByOrderIdAndServiceId(ctx, orderId, serviceId)
+	if err != nil {
+		return err
+	}
+
+	return s.repo.ReturnMoneyFromReserve(ctx, userId, amount, whoMade, fmt.Sprintf("money returned for service %s of order number %d", serviceName, orderId))
 }

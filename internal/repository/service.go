@@ -2,8 +2,7 @@ package repository
 
 import (
 	"context"
-
-	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/domain"
+	"github.com/PoorMercymain/balance_api/internal/domain"
 )
 
 type service struct {

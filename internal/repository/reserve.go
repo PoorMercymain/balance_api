@@ -6,7 +6,7 @@ import (
 	"github.com/jackc/pgx/v4"
 	"time"
 
-	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/domain"
+	"github.com/PoorMercymain/balance_api/internal/domain"
 )
 
 type reserve struct {
@@ -131,7 +131,8 @@ func (r *reserve) ApproveRevenue(ctx context.Context, userId domain.Id, serviceI
 	return nil
 }
 
-func (r *reserve) ReturnMoneyFromReserve(ctx context.Context, userId domain.Id, amount uint32) error {
+func (r *reserve) ReturnMoneyFromReserve(ctx context.Context, userId domain.Id, amount uint32, whoMade string, reason string) error {
+	var uid domain.Id
 	_, err := r.db.conn.Exec(ctx, `UPDATE "user" SET balance = balance  + $1 WHERE id = $2`,
 		amount, userId)
 
@@ -139,5 +140,32 @@ func (r *reserve) ReturnMoneyFromReserve(ctx context.Context, userId domain.Id, 
 		return err
 	}
 
+	err = r.db.conn.QueryRow(ctx,
+		`INSERT INTO user_report (user_id, money, made_by, reason) VALUES ($1, $2, $3, $4) RETURNING user_id`,
+		userId, amount, whoMade, reason).Scan(&uid)
+
+	if err != nil && err != pgx.ErrNoRows {
+		return err
+	}
+
 	return err
+}
+
+func (r *reserve) ReadServiceName(ctx context.Context, id domain.Id) (string, error) {
+	var serviceName string
+
+	row, err := r.db.conn.Query(ctx,
+		`SELECT service_name FROM service WHERE id = $1`, id)
+
+	if err != nil {
+		return serviceName, err
+	}
+
+	defer row.Close()
+
+	if row.Next() {
+		err = row.Scan(&serviceName)
+	}
+
+	return serviceName, err
 }

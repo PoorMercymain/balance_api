@@ -22,7 +22,8 @@ type ReserveRepository interface {
 	DeleteServiceFromOrderService(ctx context.Context, serviceId Id, orderId Id) error
 	OrderExists(ctx context.Context, orderId Id) (bool, error)
 	DeleteOrder(ctx context.Context, id Id) error
-	ReturnMoneyFromReserve(ctx context.Context, userId Id, amount uint32) error
+	ReturnMoneyFromReserve(ctx context.Context, userId Id, amount uint32, whoMade string, reason string) error
+	ReadServiceName(ctx context.Context, id Id) (string, error)
 }
 
 type ReserveService interface {
@@ -31,5 +32,5 @@ type ReserveService interface {
 	Delete(ctx context.Context, id Id) error
 	Read(ctx context.Context, id Id) (Reserve, error)
 	ApproveRevenue(ctx context.Context, userId Id, serviceId Id, orderId Id, amount uint32) error
-	ReturnMoneyFromReserve(ctx context.Context, userId Id, serviceId Id, orderId Id, amount uint32) error
+	ReturnMoneyFromReserve(ctx context.Context, userId Id, serviceId Id, orderId Id, amount uint32, whoMade string) error
 }

@@ -2,7 +2,8 @@ package service
 
 import (
 	"context"
-	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/domain"
+	"fmt"
+	"github.com/PoorMercymain/balance_api/internal/domain"
 )
 
 type user struct {
@@ -33,8 +34,17 @@ func (s *user) ReadBalance(ctx context.Context, id domain.Id) (uint32, error) {
 	return s.repo.ReadBalance(ctx, id)
 }
 
-func (s *user) ReserveMoney(ctx context.Context, userId domain.Id, serviceId domain.Id, orderId domain.Id, amount uint32) error {
-	err := s.repo.SubtractMoney(ctx, userId, amount)
+func (s *user) ReadServiceName(ctx context.Context, id domain.Id) (string, error) {
+	return s.repo.ReadServiceName(ctx, id)
+}
+
+func (s *user) ReserveMoney(ctx context.Context, userId domain.Id, serviceId domain.Id, orderId domain.Id, amount uint32, whoMade string) error {
+	serviceName, err := s.repo.ReadServiceName(ctx, serviceId)
+	if err != nil {
+		return err
+	}
+
+	err = s.repo.SubtractMoney(ctx, userId, amount, whoMade, fmt.Sprintf("money reserved for order %d service %s", orderId, serviceName))
 	if err != nil {
 		return err
 	}
@@ -42,6 +52,14 @@ func (s *user) ReserveMoney(ctx context.Context, userId domain.Id, serviceId dom
 	return s.repo.ReserveMoney(ctx, userId, serviceId, orderId, amount)
 }
 
-func (s *user) AddMoney(ctx context.Context, id domain.Id, amount uint32) error {
-	return s.repo.AddMoney(ctx, id, amount)
+func (s *user) AddMoney(ctx context.Context, id domain.Id, amount uint32, whoMade string, reason string) error {
+	return s.repo.AddMoney(ctx, id, amount, whoMade, reason)
+}
+
+func (s *user) TransactionList(ctx context.Context, id domain.Id) ([]string, error) {
+	return s.repo.TransactionList(ctx, id)
+}
+
+func (s *user) MakeReport(ctx context.Context, data domain.DateForReport) (string, error) {
+	return s.repo.MakeReport(ctx, data)
 }

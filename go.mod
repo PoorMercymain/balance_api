@@ -1,4 +1,4 @@
-module github.com/PoorMercymain/REST-API-work-duration-counter
+module github.com/PoorMercymain/balance_api
 
 go 1.19
 

@@ -2,8 +2,8 @@ package handler
 
 import (
 	"encoding/json"
-	"github.com/PoorMercymain/REST-API-work-duration-counter/internal/domain"
-	"github.com/PoorMercymain/REST-API-work-duration-counter/pkg/router"
+	"github.com/PoorMercymain/balance_api/internal/domain"
+	"github.com/PoorMercymain/balance_api/pkg/router"
 	"net/http"
 )
 
