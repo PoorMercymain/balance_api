@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 	"github.com/jackc/pgx/v4"
 	"time"
 
@@ -73,19 +72,17 @@ func (r *reserve) Read(ctx context.Context, id domain.Id) (domain.Reserve, error
 }
 
 func (r *reserve) DeleteByOrderIdAndServiceId(ctx context.Context, orderId domain.Id, serviceId domain.Id) error {
-	fmt.Println("попытка удаления из резерва", orderId)
 	_, err := r.db.conn.Exec(ctx, `DELETE FROM reserve WHERE order_id=$1 AND service_id=$2`, orderId, serviceId)
 
 	if err != nil {
 		return err
 	}
-	fmt.Println("удалилось успешно")
+
 	return err
 }
 
 func (r *reserve) DeleteOrder(ctx context.Context, id domain.Id) error {
 	_, err := r.db.conn.Exec(ctx, `DELETE FROM "order" WHERE id=$1`, id)
-	fmt.Println("попытка удаления ордера")
 	if err != nil {
 		return err
 	}
@@ -95,7 +92,6 @@ func (r *reserve) DeleteOrder(ctx context.Context, id domain.Id) error {
 
 func (r *reserve) DeleteServiceFromOrderService(ctx context.Context, serviceId domain.Id, orderId domain.Id) error {
 	_, err := r.db.conn.Exec(ctx, `DELETE FROM order_service WHERE order_id=$1 AND service_id=$2`, orderId, serviceId)
-	fmt.Println("exec")
 	if err != nil {
 		return err
 	}
@@ -112,7 +108,6 @@ func (r *reserve) OrderExists(ctx context.Context, orderId domain.Id) (bool, err
 		return false, err
 	}
 
-	fmt.Println("строки есть")
 	return true, err
 }
 

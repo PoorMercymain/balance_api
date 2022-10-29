@@ -238,7 +238,7 @@ func (r *user) ReadAccountingReport(ctx context.Context, date domain.DateForRepo
 		if err != nil {
 			return reportContentSlice, err
 		}
-		fmt.Println(reportContent, "f")
+
 		reportContentSlice = append(reportContentSlice, reportContent)
 	}
 	return reportContentSlice, err
@@ -250,14 +250,11 @@ func (r *user) MakeReport(ctx context.Context, date domain.DateForReport) (strin
 		return "", err
 	}
 
-	fmt.Println(reportContent)
-
 	reportContentStr := make([][]string, len(reportContent))
 	for i, content := range reportContent {
 		reportContentStr[i] = make([]string, 2)
 		reportContentStr[i][0] = content.ServiceName
 		reportContentStr[i][1] = strconv.Itoa(int(content.Total))
-		fmt.Println(reportContentStr[i])
 	}
 
 	filename := fmt.Sprintf("report_%s.csv", time.Now().Format("2006-01-02"))
@@ -269,7 +266,6 @@ func (r *user) MakeReport(ctx context.Context, date domain.DateForReport) (strin
 	defer file.Close()
 
 	writer := csv.NewWriter(file)
-	fmt.Println(reportContentStr)
 	err = writer.WriteAll(reportContentStr)
 	return fmt.Sprintf("%s/%s", "localhost:8000", filename), err
 }

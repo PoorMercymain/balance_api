@@ -36,7 +36,6 @@ func (s *reserve) ApproveRevenue(ctx context.Context, userId domain.Id, serviceI
 	if err != nil {
 		return err
 	}
-	fmt.Println("service from order-service")
 
 	err = s.repo.DeleteByOrderIdAndServiceId(ctx, orderId, serviceId)
 	if err != nil {
@@ -48,11 +47,8 @@ func (s *reserve) ApproveRevenue(ctx context.Context, userId domain.Id, serviceI
 	if err != nil {
 		return err
 	}
-	fmt.Println("order exists")
-	fmt.Println(exists)
 
 	if !exists {
-		fmt.Println("удаляем ордер")
 		s.repo.DeleteOrder(ctx, orderId)
 	}
 
