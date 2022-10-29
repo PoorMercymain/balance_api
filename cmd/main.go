@@ -65,6 +65,7 @@ func main() {
 	r.POST("/user/addmoney", router.WrapHandler(uh.AddMoney))
 	r.GET("/transaction/:user_id", router.WrapHandler(uh.TransactionList))
 	r.POST("/csv", router.WrapHandler(uh.MakeReport))
+	r.GET("/report/:filename", router.WrapHandler(uh.GetReport))
 
 	theServer := server.New("8000", r)
 

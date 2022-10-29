@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/PoorMercymain/balance_api/internal/domain"
+	"io/ioutil"
 )
 
 type user struct {
@@ -12,6 +13,18 @@ type user struct {
 
 func NewUser(repo domain.UserRepository) *user {
 	return &user{repo: repo}
+}
+
+func newError(text string) error {
+	return &incorrectFilename{text}
+}
+
+type incorrectFilename struct {
+	s string
+}
+
+func (e *incorrectFilename) Error() string {
+	return e.s
 }
 
 func (s *user) Create(ctx context.Context, user domain.User) (domain.Id, error) {
@@ -62,4 +75,18 @@ func (s *user) TransactionList(ctx context.Context, id domain.Id) ([]string, err
 
 func (s *user) MakeReport(ctx context.Context, data domain.DateForReport) (string, error) {
 	return s.repo.MakeReport(ctx, data)
+}
+
+func (s *user) GetReport(ctx context.Context, filename string) ([]byte, error) {
+	result := make([]byte, 0)
+	if !(len(filename) > 3 || filename[len(filename)-3:] == "csv") {
+		return result, newError("Incorrect filename. Expected a csv file")
+	}
+
+	result, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return result, err
+	}
+
+	return result, err
 }

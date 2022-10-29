@@ -270,5 +270,5 @@ func (r *user) MakeReport(ctx context.Context, date domain.DateForReport) (strin
 
 	writer := csv.NewWriter(file)
 	err = writer.WriteAll(reportContentStr)
-	return fmt.Sprintf("%s/%s", "localhost:8000", filename), err
+	return fmt.Sprintf("%s/%s", "localhost:8000/report", filename), err
 }

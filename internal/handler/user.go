@@ -186,3 +186,21 @@ func (h *user) MakeReport(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
+
+func (h *user) GetReport(w http.ResponseWriter, r *http.Request) {
+	filename, err := router.Params(r).String("filename")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/csv")
+
+	data, err := h.srv.GetReport(r.Context(), filename)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(data)
+}

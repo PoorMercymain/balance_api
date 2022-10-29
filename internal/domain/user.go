@@ -47,4 +47,5 @@ type UserService interface {
 	ReadServiceName(ctx context.Context, id Id) (string, error)
 	TransactionList(ctx context.Context, id Id) ([]string, error)
 	MakeReport(ctx context.Context, date DateForReport) (string, error)
+	GetReport(ctx context.Context, filename string) ([]byte, error)
 }
