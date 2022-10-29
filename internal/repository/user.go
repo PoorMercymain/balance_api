@@ -110,11 +110,11 @@ func (r *user) ReserveMoney(ctx context.Context, userId domain.Id, serviceId dom
 		`INSERT INTO reserve (user_id, order_id, service_id, money) VALUES ($1, $2, $3, $4)`,
 		userId, orderId, serviceId, amount).Scan()
 
-	if err != nil {
+	if err != nil && err != pgx.ErrNoRows {
 		return err
 	}
 
-	return err
+	return nil
 }
 
 func (r *user) AddMoney(ctx context.Context, id domain.Id, amount uint32, whoMade string, reason string) error {

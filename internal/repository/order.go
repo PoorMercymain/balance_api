@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"github.com/jackc/pgx/v4"
 
 	"github.com/PoorMercymain/balance_api/internal/domain"
 )
@@ -74,9 +75,9 @@ func (r *order) AddService(ctx context.Context, orderId domain.Id, serviceId dom
 		`INSERT INTO order_service (order_id, service_id) VALUES ($1, $2)`,
 		orderId, serviceId).Scan(&id)
 
-	if err != nil {
+	if err != nil && err != pgx.ErrNoRows {
 		return err
 	}
 
-	return err
+	return nil
 }
