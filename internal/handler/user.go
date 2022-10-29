@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/PoorMercymain/balance_api/internal/domain"
 	"github.com/PoorMercymain/balance_api/pkg/router"
 	"net/http"
@@ -122,8 +121,6 @@ func (h *user) ReserveMoney(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
-	fmt.Println(data)
 
 	err := h.srv.ReserveMoney(r.Context(), data.UserId, data.ServiceId, data.OrderId, data.Amount, data.WhoMade)
 	if err != nil {

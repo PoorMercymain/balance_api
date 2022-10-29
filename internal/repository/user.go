@@ -32,6 +32,18 @@ func (e *incorrectBalance) Error() string {
 	return e.s
 }
 
+func newErrorWrongSortParam(text string) error {
+	return &wrongSortParam{text}
+}
+
+type wrongSortParam struct {
+	s string
+}
+
+func (e *wrongSortParam) Error() string {
+	return e.s
+}
+
 func (r *user) Create(ctx context.Context, user domain.User) (domain.Id, error) {
 	var id domain.Id
 
@@ -197,6 +209,14 @@ func (r *user) TransactionList(ctx context.Context, id domain.Id) ([]string, err
 		reason          string
 		transactionDate time.Time
 	)
+
+	if pr.SortDirection != "" && pr.SortDirection != "desc" {
+		return make([]string, 0), newErrorWrongSortParam("The sort_dir parameter can only be empty string or desc")
+	}
+
+	if pr.SortField != "money" && pr.SortField != "transaction_date" && pr.SortField != "money, transaction_date" {
+		return make([]string, 0), newErrorWrongSortParam("The sort_by parameter can only be money, transaction_date or both money and transaction_date")
+	}
 
 	cmd := fmt.Sprintf(`SELECT money, made_by, reason, transaction_date 
 						FROM user_report 
