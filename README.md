@@ -7,7 +7,7 @@ BALANCE_API_HOSTNAME=localhost;BALANCE_API_PORT=3001;BALANCE_API_USERNAME=balanc
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198801546-0a04cbd2-7b5b-4c6b-84c2-76646f5d3654.png"></p>
 <p align=center>Роуты в мэйне</p>
 <p></p>
-Ниже приведены примеры из Postman, показывающие, как можно пользоваться данным сервисом.
+Ниже приведены примеры из Postman, показывающие, как можно пользоваться разработанным сервисом.
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198809445-acff72ba-4b26-47b1-855e-dcef8f43ecb5.png"></p>
 <p align=center>Пример добавления пользователя</p>
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198808135-de46f6e6-9e35-4c1d-8c7d-8195fce22919.png"></p>
