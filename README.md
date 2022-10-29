@@ -24,7 +24,7 @@ BALANCE_API_HOSTNAME=localhost;BALANCE_API_PORT=3001;BALANCE_API_USERNAME=balanc
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198813405-885b5dbe-e10c-4bd0-ae9e-e056135d80d3.png"></p>
 <p align=center>Пример запроса для отмены резерва на случай, когда услугу оказать может не получиться (возвращает деньги на счет пользователя и убирает услугу из резерва)</p>
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198813557-40e3826f-7b55-4ab0-9c07-9e92c6100be7.png"></p>
-<p align=center>Пример запроса для добавления средств на счет пользователя</p>
+<p align=center>Пример запроса для добавления средств на счет пользователя (пришлось добавить два поля для выполнения доп задания)</p>
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198813628-0febc369-45ec-4fc6-86ac-33939996e03e.png"></p>
 <p align=center>Пример запроса баланса пользователя (по его id)</p>
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198814637-844b0dc7-444c-4569-a73d-339f0bf6f536.png"></p>
