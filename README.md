@@ -27,7 +27,7 @@ BALANCE_API_HOSTNAME=localhost;BALANCE_API_PORT=3001;BALANCE_API_USERNAME=balanc
 <p align=center>Пример запроса для добавления средств на счет пользователя</p>
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198813628-0febc369-45ec-4fc6-86ac-33939996e03e.png"></p>
 <p align=center>Пример запроса баланса пользователя (по его id)</p>
-<p align=center><img src="https://user-images.githubusercontent.com/67076111/198813782-f0458f44-79b4-49fa-890b-e26384f3aa81.png"></p>
+<p align=center><img src="https://user-images.githubusercontent.com/67076111/198814637-844b0dc7-444c-4569-a73d-339f0bf6f536.png"></p>
 <p align=center>Пример запроса для постраничного вывода списка транзакций (limit - максимальное число транзакций в выводе, sort_dir - если прописать desc, то по убыванию, если ничего не прописать - по возрастанию, в sort_by указывается название колонки таблицы user_report для сортировки по этой колонке)</p>
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198814021-fd9e6f68-06da-4076-9347-d9510d84b87b.png"></p>
 <p align=center>Пример запроса для создания отчета в формате csv. Это я еще попробую доделать...</p>
