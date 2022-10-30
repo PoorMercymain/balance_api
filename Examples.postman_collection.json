@@ -320,6 +320,25 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "get_csv_content",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/report/report_2022-10-30.csv",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"report",
+						"report_2022-10-30.csv"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
