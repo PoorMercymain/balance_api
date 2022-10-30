@@ -1,10 +1,10 @@
 # balance_api
 <h3>Как запустить?</h3>
-<p>Сначала используем файл docker-compose.yml для запуска PostgreSQL в Docker (т.е. просто <b>прописываем в терминале docker-compose up, находясь в директории с данным файлом</b>)
-После этого <b>открываем проект в GoLand</b>, и <b>в конфигурации запуска указываем следующие переменные окружения</b> (в случае чего, данные значения можно посмотреть в файле .env.example):
+<p>Сначала используем файл <a href=https://github.com/PoorMercymain/balance_api/blob/main/docker-compose.yml>docker-compose.yml</a> для создания контейнера и запуска PostgreSQL в Docker (т.е. просто <b>прописываем в терминале docker-compose up, находясь в директории с данным файлом</b>)
+После этого <b>открываем проект в GoLand</b>, и <b>в конфигурации запуска указываем следующие переменные окружения</b> (в случае чего, данные значения можно посмотреть в файле <a href=https://github.com/PoorMercymain/balance_api/blob/main/.env.example>.env.example</a>):
 <br><br><b>BALANCE_API_HOSTNAME=localhost;BALANCE_API_PORT=3001;BALANCE_API_USERNAME=balanceapi;BALANCE_API_PASSWORD=balanceapi;BALANCE_API_DATABASE_NAME=balanceapi</b><br><br>
-Далее, <b>используя файл scheme.sql, создаем таблицы в БД</b> (можно это сделать прямо из GoLand, открыв данный файлик, настроив data source и нажав на соответствующую кнопку в интерфейсе IDE)
-После этого <b>можно запустить файл main.go</b>, сервис будет работать на localhost:8000 (конкретные роуты указаны в мэйне (как это выглядит на данный момент - см. на рисунке ниже), но я в основном тестил базовый функционал, так что что-то не из списка минимальных требований может не работать/работать некорректно (но скорее всего подавляющее большинство работает как надо))</p>
+Далее, <b>используя файл <a href=https://github.com/PoorMercymain/balance_api/blob/main/docs/scheme.sql>scheme.sql</a>, создаем таблицы в БД</b> (можно это сделать прямо из GoLand, открыв данный файлик, настроив data source и нажав на соответствующую кнопку в интерфейсе IDE)
+После этого <b>можно запустить файл <a href=https://github.com/PoorMercymain/balance_api/blob/main/cmd/main.go>main.go</a></b>, сервис будет работать на localhost:8000 (конкретные роуты указаны в мэйне (как это выглядит на данный момент - см. на рисунке ниже), но я в основном тестил базовый функционал, так что что-то не из списка минимальных требований может не работать/работать некорректно (но скорее всего подавляющее большинство работает как надо))</p>
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198839929-a61931fb-9551-40a0-8203-3bf812611a79.png"></p>
 <p align=center>Роуты в мэйне</p>
 <p></p>
