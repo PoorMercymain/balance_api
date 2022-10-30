@@ -9,7 +9,7 @@
 <p align=center>Роуты в мэйне</p>
 <p></p>
 <h3>Примеры запросов и комментарии к ним</h3>
-<b align=center><p>Ниже приведены примеры из Postman, показывающие, как можно пользоваться разработанным сервисом. Также их можно посмотреть с помощью <a href=https://github.com/PoorMercymain/balance_api/blob/main/Examples.postman_collection.json>файла</a>, который можно экспортировать в постман</p></b>
+<b align=center><p>Ниже приведены примеры из Postman, показывающие, как можно пользоваться разработанным сервисом. Также они есть в <a href=https://github.com/PoorMercymain/balance_api/blob/main/Examples.postman_collection.json>файле</a>, который можно экспортировать в постман</p></b>
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198809445-acff72ba-4b26-47b1-855e-dcef8f43ecb5.png"></p>
 <p align=center>Пример добавления пользователя</p>
 <p align=center><img src="https://user-images.githubusercontent.com/67076111/198808135-de46f6e6-9e35-4c1d-8c7d-8195fce22919.png"></p>
