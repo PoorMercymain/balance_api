@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "b5a143f8-eb5a-4650-a9c1-53dfa070c314",
+		"name": "Examples",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create_user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\":2,\r\n    \"username\":\"name2\",\r\n    \"balance\":50000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_service",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"service_id\":5,\r\n    \"name\":\"name4\",\r\n    \"price\":2000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/service",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"order_id\":5,\r\n    \"user_id\":2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/order",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add_service",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"order_id\":5,\r\n    \"service_id\":4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/order/addservice",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"order",
+						"addservice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "min_reserve_money",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\":2,\r\n    \"service_id\":4,\r\n    \"order_id\":5,\r\n    \"amount\":50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/user/reserve",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"reserve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancel_reserve",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\":2,\r\n    \"service_id\":5,\r\n    \"order_id\":5,\r\n    \"amount\":50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/reserve/cancelreserve",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"reserve",
+						"cancelreserve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "min_approve_revenue",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\":2,\r\n    \"service_id\":4,\r\n    \"order_id\":5,\r\n    \"amount\":250\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/reserve/approverevenue",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"reserve",
+						"approverevenue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "min_get_balance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/balance/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"balance",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "min_add_money",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":2,\r\n    \"money\":1000,\r\n    \"who_made\":\"author\",\r\n    \"reason\":\"won`t tell\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/user/addmoney",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"addmoney"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pagination",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/transaction/2?limit=9&page=1&sort_by=money&sort_dir=desc",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"transaction",
+						"2"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "9"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "sort_by",
+							"value": "money"
+						},
+						{
+							"key": "sort_dir",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "make_csv",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\":2022,\r\n    \"month\":10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/csv",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"csv"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_csv_content",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/report/report_2022-10-30.csv",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"report",
+						"report_2022-10-30.csv"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
